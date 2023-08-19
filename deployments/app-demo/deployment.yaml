@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-demo
+  namespace: app-demo
+spec:
+  selector:
+    matchLabels:
+      app: app-demo
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: app-demo
+    spec:
+      serviceAccountName: sa-app-demo
+      topologySpreadConstraints: # distribute the pods to worker nodes on different AZ
+      - maxSkew: 1
+        topologyKey: topology.kubernetes.io/zone
+        whenUnsatisfiable: ScheduleAnyway
+        nodeTaintsPolicy: Honor
+        labelSelector:
+          matchLabels:
+            app: app-demo
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        nodeTaintsPolicy: Honor
+        labelSelector:
+          matchLabels:
+            app: app-demo
+      containers:
+      - name: app-demo
+        image: 123456789012.dkr.ecr.ap-southeast-2.amazonaws.com/app-demo:v1 #v1
+        imagePullPolicy: Always
+        env:
+        - name: DB_HOST
+          valueFrom:
+            secretKeyRef:
+              name: app-demo-secret
+              key: DB_HOST
+        - name: DB_PASS
+          valueFrom:
+            secretKeyRef:
+              name: app-demo-secret
+              key: DB_PASS
+        - name: DB_PORT
+          valueFrom:
+            secretKeyRef:
+              name: app-demo-secret
+              key: DB_PORT
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "256Mi"
+          limits:
+            cpu: "500m"
+            memory: "500Mi"
+        ports:
+        - containerPort: 80
+      restartPolicy: Always
+status: {}

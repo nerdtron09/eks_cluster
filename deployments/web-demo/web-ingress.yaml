@@ -1,0 +1,37 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: web-demo-ingress # change to unique name
+  namespace: web-demo # change to correct namespace - Ensure correct namespace before applying
+  annotations:
+    # Only apply specific annotations that are applicable for this Ingress
+    # Do not override the annotations defined on the main ALB Ingress Manifest
+    alb.ingress.kubernetes.io/group.name: eks-cluster-demo-ingresss # use same ALB for all ingress on same group.name
+    alb.ingress.kubernetes.io/group.order: '2' # this should be unique, check other Ingress on other namespaces
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/actions.web-deny: >
+      {"type":"fixed-response","fixedResponseConfig":{"contentType":"text/plain","statusCode":"503","messageBody":"Access Denied"}}
+spec:
+  ingressClassName: alb
+    - host: demo.masterkenneth.com 
+      http:
+        paths:
+          - path: /web-demo/admin
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: web-deny
+                port:
+                  name: use-annotation
+    - host: demo.masterkenneth.com 
+      http:
+        paths:
+          - path: /web-demo
+            pathType: Prefix
+            backend:
+              service:
+                name: web-demo
+                port:
+                  number: 8080

@@ -1,6 +1,6 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: demo-ingress
+  name: app-demo
   labels:
-    name: demo-ingress
+    name: app-demo

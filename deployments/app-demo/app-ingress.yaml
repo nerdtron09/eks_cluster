@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app-demo-ingress # change to unique name
+  namespace: app-demo # change to correct namespace - Ensure correct namespace before applying
+  annotations:
+    # Only apply specific annotations that are applicable for this Ingress
+    # Do not override the annotations defined on the main ALB Ingress Manifest
+    alb.ingress.kubernetes.io/group.name: eks-cluster-demo-ingresss # use same ALB for all ingress on same group.name
+    alb.ingress.kubernetes.io/group.order: '3' # this should be unique, check other Ingress on other namespaces
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+spec:
+  ingressClassName: alb
+  rules:
+    - host: demo.masterkenneth.com 
+      http:
+        paths:
+          - path: /app-demo
+            pathType: Prefix
+            backend:
+              service:
+                name: app-demo-svc
+                port:
+                  number: 8080

@@ -1,0 +1,91 @@
+---
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: eks-cluster-demo
+  region: ap-southeast-2
+  version: "1.27"
+  tags:
+    Owner: "devops"
+    Environment: demo
+    Project: demo
+    Application: eks
+    CostCenter: devops
+
+vpc:
+  cidr: 10.100.0.0/16
+  clusterEndpoints:
+    publicAccess:  true
+    privateAccess: true
+  # publicAccessCIDRs: ["xx.xx.xx.xx/32", "xx.xx.xx.xx/32"] # Office IP, Allowed IP only
+
+iam:
+  withOIDC: true
+  serviceAccounts:
+  - metadata:
+      name: sa-storage-controller
+      namespace:  kube-system 
+      labels: {serviceaccount: "eks-cluster-demo"}
+    attachPolicyARNs:
+    - "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"  # create the IAM policies and reference them on each section.
+  # - metadata:
+  #     name: sa-load-balancer-controller
+  #     namespace:  kube-system 
+  #     labels: {serviceaccount: "eks-cluster-demo"}
+  #   attachPolicyARNs:
+  #   - "arn:aws:iam::123456789012:policy/AWSLoadBalancerControllerIAMPolicy"
+  # - metadata:
+  #     name: sa-cluster-autoscaler
+  #     namespace:  kube-system 
+  #     labels: {serviceaccount: "eks-cluster-demo"}
+  #   attachPolicyARNs:
+  #   - "arn:aws:iam::123456789012:policy/AmazonEKS_ClusterAutoscalerPolicy"
+  # - metadata:
+  #       name: fluent-bit-aws-for-fluent-bit
+  #       namespace:  default
+  #       labels: {serviceaccount: "eks-cluster-demo"}
+  #   attachPolicyARNs:
+  #   - "arn:aws:iam::123456789012:policy/role-to-send-to-elk"
+  # - metadata:
+  #       name: sa-app-demo
+  #       namespace: app-demo
+  #       labels: {serviceaccount: "eks-cluster-demo"}
+  #   attachPolicyARNs:
+  #   - "arn:aws:iam::123456789012:policy/AppDemoPolicy"
+  # - metadata:
+  #       name: sa-web-demo
+  #       namespace: web-demo
+  #       labels: {serviceaccount: "eks-cluster-demo"}
+  #   attachPolicyARNs:
+  #   - "arn:aws:iam::123456789012:policy/WebDemoPolicy"
+managedNodeGroups:    # node group for the worker nodes
+  - name: nodegroup-spot-1
+    instanceTypes: ["t3.large","t3.xlarge"]
+    minSize: 2
+    maxSize: 8
+    desiredCapacity: 2
+    volumeSize: 20
+    privateNetworking: true
+    spot: true
+    tags:
+      Owner: devops
+      Environment: demo
+      Project: demo
+      Lifecycle: ec2spot
+      Automation: eksctl
+      CostCenter: devops
+      Role: workers
+    iam:
+      withAddonPolicies:
+        albIngress: true
+        autoScaler: true
+        cloudWatch: true
+        ImageBuilder: true
+        ebs: true
+cloudWatch:
+  clusterLogging:
+    # enable specific types of cluster control plane logs
+    enableTypes: ["*"]
+    # all supported types: "api", "audit", "authenticator", "controllerManager", "scheduler"
+    # supported special values: "*" and "all"
