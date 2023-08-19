@@ -7,7 +7,7 @@ Guide contains:
 
 - eksctl commands to create VPC, EKS Cluster, Nodes, IAM service accounts.
 - Add-on installations for EBS, helm installation for Fluentbit
-- Installations for Cluster Autoscaler, AWS Ingress Controllers
+- Installations for Cluster Autoscaler, AWS Ingress Controllers, ExternalSecrets for Syncing
 
 ## Pre-requisites
 Before proceeding, install the following versions on your local machine:
