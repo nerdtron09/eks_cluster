@@ -69,6 +69,15 @@ To have CPU and RAM usage metrics shown on Rancher Web UI, install the metrics s
 kubectl apply -f cluster/metrics-server.yaml
 ```
 
+## Configure VPC Peering
+EKS VPC peerings should configure with the RDS VPC (if you have one):
+
+- EKS to RDS VPC (on same account)
+
+Note: Upon creating a VPC peer, edit the VPC Peering DNS setting and enable DNS resolving on both VPC. This setting is required to enable ExternalName services for RDS inside Kubernetes.
+
+Note: Ensure that Route tables are update on both accounts VPC/Subnets when peering is configured.
+
 ## Install EBS Driver to the Cluster
 Check if EBS addon is installed
 ```
