@@ -230,7 +230,7 @@ kubectl get pods | grep external-secrets
 ## How to use ExternalSecrets with AWS Secrets Manager or Parameter Store
 
 - Create an IAM Service account for specific namespace. 
-- Ensure that the IAM policy for the service account is allowed to access specific AWS Secret or AW Parameter Store. See the example policies. 
+- Ensure that the IAM policy for the service account is allowed to access specific AWS Secret Manager or AWS Parameter Store. See the example policies. 
 - Create a SecretStore YAML on the namespace you want to have a secret sync. Add the serviceAccount on this YAML. See example below:
 ```
 $ kubectl apply -f app-secrets-store.yaml  
