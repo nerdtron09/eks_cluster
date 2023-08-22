@@ -33,6 +33,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: web-demo
+                name: web-demo-svc
                 port:
                   number: 8080
