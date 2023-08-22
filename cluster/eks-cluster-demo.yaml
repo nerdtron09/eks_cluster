@@ -34,31 +34,31 @@ iam:
       namespace:  kube-system 
       labels: {serviceaccount: "eks-cluster-demo"}
     attachPolicyARNs:
-    - "arn:aws:iam::123456789012:policy/AWSLoadBalancerControllerIAMPolicy"
+    - "arn:aws:iam::239134982846:policy/AWSLoadBalancerControllerIAMPolicy"
   - metadata:
       name: sa-cluster-autoscaler
       namespace:  kube-system 
       labels: {serviceaccount: "eks-cluster-demo"}
     attachPolicyARNs:
-    - "arn:aws:iam::123456789012:policy/AmazonEKS_ClusterAutoscalerPolicy"
+    - "arn:aws:iam::239134982846:policy/AmazonEKS_ClusterAutoscalerPolicy"
   # - metadata:
   #       name: fluent-bit-aws-for-fluent-bit
   #       namespace:  default
   #       labels: {serviceaccount: "eks-cluster-demo"}
   #   attachPolicyARNs:
   #   - "arn:aws:iam::123456789012:policy/role-to-send-to-elk"
-  # - metadata:
-  #       name: sa-app-demo
-  #       namespace: app-demo
-  #       labels: {serviceaccount: "eks-cluster-demo"}
-  #   attachPolicyARNs:
-  #   - "arn:aws:iam::123456789012:policy/AppDemoPolicy"
-  # - metadata:
-  #       name: sa-web-demo
-  #       namespace: web-demo
-  #       labels: {serviceaccount: "eks-cluster-demo"}
-  #   attachPolicyARNs:
-  #   - "arn:aws:iam::123456789012:policy/WebDemoPolicy"
+  - metadata:
+        name: sa-app-demo
+        namespace: app-demo
+        labels: {serviceaccount: "eks-cluster-demo"}
+    attachPolicyARNs:
+    - "arn:aws:iam::239134982846:policy/AppDemoPolicy"
+  - metadata:
+        name: sa-web-demo
+        namespace: web-demo
+        labels: {serviceaccount: "eks-cluster-demo"}
+    attachPolicyARNs:
+    - "arn:aws:iam::239134982846:policy/WebDemoPolicy"
 managedNodeGroups:    # node group for the worker nodes
   - name: nodegroup-spot-1
     instanceTypes: ["t3.large","t3.xlarge"]

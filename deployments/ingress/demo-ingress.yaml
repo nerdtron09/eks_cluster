@@ -18,14 +18,14 @@ metadata:
     alb.ingress.kubernetes.io/success-codes: "200,301,304"
     alb.ingress.kubernetes.io/ssl-policy: ELBSecurityPolicy-TLS-1-1-2017-01
     alb.ingress.kubernetes.io/load-balancer-attributes: routing.http2.enabled=true,idle_timeout.timeout_seconds=300,deletion_protection.enabled=true
-    alb.ingress.kubernetes.io/certificate-arn: 'arn:aws:acm:ap-southeast-2:
+    alb.ingress.kubernetes.io/certificate-arn: 'arn:aws:acm:ap-southeast-2:239134982846:certificate/faaed4b8-5681-4292-821b-52bb7c7ce5ad'
     alb.ingress.kubernetes.io/ssl-redirect: '443'
     alb.ingress.kubernetes.io/actions.redirect-to-google: >
       {"Type":"redirect","RedirectConfig":{"Host":"www.google.com","Path":"/","Port":"443","Protocol":"HTTPS","StatusCode":"HTTP_302"}}
 spec:
   ingressClassName: alb
   rules:
-    - host: demo.masterkenneth.com
+    - host: dev.cloudmigs.com
       http:
         paths:
           - path: /search  # sample redirection rule for AWS ALB

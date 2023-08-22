@@ -51,7 +51,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: web-demo
-          image: 123456789012.dkr.ecr.ap-southeast-2.amazonaws.com/web-demo:v1 #v1
+          image: nginx:latest #v1
           imagePullPolicy: Always
           env:
           - name: DB_HOST
@@ -79,7 +79,7 @@ spec:
           ports:
             - containerPort: 80
           volumeMounts:
-            - name: wep-demo-pv
+            - name: web-demo-pv
               mountPath: /mnt/data
       volumes:
         - name: web-demo-pv

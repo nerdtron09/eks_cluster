@@ -6,7 +6,7 @@ metadata:
   annotations:
     # Only apply specific annotations that are applicable for this Ingress
     # Do not override the annotations defined on the main ALB Ingress Manifest
-    alb.ingress.kubernetes.io/group.name: eks-cluster-demo-ingresss # use same ALB for all ingress on same group.name
+    alb.ingress.kubernetes.io/group.name: eks-cluster-demo-ingress # use same ALB for all ingress on same group.name
     alb.ingress.kubernetes.io/group.order: '2' # this should be unique, check other Ingress on other namespaces
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/scheme: internet-facing
@@ -15,7 +15,8 @@ metadata:
       {"type":"fixed-response","fixedResponseConfig":{"contentType":"text/plain","statusCode":"503","messageBody":"Access Denied"}}
 spec:
   ingressClassName: alb
-    - host: demo.masterkenneth.com 
+  rules:
+    - host: dev.cloudmigs.com
       http:
         paths:
           - path: /web-demo/admin
@@ -25,7 +26,7 @@ spec:
                 name: web-deny
                 port:
                   name: use-annotation
-    - host: demo.masterkenneth.com 
+    - host: dev.cloudmigs.com
       http:
         paths:
           - path: /web-demo
