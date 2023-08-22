@@ -51,7 +51,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: web-demo
-          image: nginx:latest #v1
+          image: 239134982846.dkr.ecr.ap-southeast-2.amazonaws.com/demo:v1 #v1
           imagePullPolicy: Always
           env:
           - name: DB_HOST
