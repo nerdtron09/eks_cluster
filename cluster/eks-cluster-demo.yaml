@@ -29,18 +29,18 @@ iam:
       labels: {serviceaccount: "eks-cluster-demo"}
     attachPolicyARNs:
     - "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"  # create the IAM policies and reference them on each section.
-  # - metadata:
-  #     name: sa-load-balancer-controller
-  #     namespace:  kube-system 
-  #     labels: {serviceaccount: "eks-cluster-demo"}
-  #   attachPolicyARNs:
-  #   - "arn:aws:iam::123456789012:policy/AWSLoadBalancerControllerIAMPolicy"
-  # - metadata:
-  #     name: sa-cluster-autoscaler
-  #     namespace:  kube-system 
-  #     labels: {serviceaccount: "eks-cluster-demo"}
-  #   attachPolicyARNs:
-  #   - "arn:aws:iam::123456789012:policy/AmazonEKS_ClusterAutoscalerPolicy"
+  - metadata:
+      name: sa-load-balancer-controller
+      namespace:  kube-system 
+      labels: {serviceaccount: "eks-cluster-demo"}
+    attachPolicyARNs:
+    - "arn:aws:iam::123456789012:policy/AWSLoadBalancerControllerIAMPolicy"
+  - metadata:
+      name: sa-cluster-autoscaler
+      namespace:  kube-system 
+      labels: {serviceaccount: "eks-cluster-demo"}
+    attachPolicyARNs:
+    - "arn:aws:iam::123456789012:policy/AmazonEKS_ClusterAutoscalerPolicy"
   # - metadata:
   #       name: fluent-bit-aws-for-fluent-bit
   #       namespace:  default
