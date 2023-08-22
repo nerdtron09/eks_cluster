@@ -87,7 +87,7 @@ eksctl get addon --name aws-ebs-csi-driver --cluster eks-cluster-demo
 Install the EBS driver
 ```
 aws eks describe-addon-versions --addon-name aws-ebs-csi-driver
-eksctl create addon --name aws-ebs-csi-driver --cluster eks-cluster-demo
+eksctl create addon --name aws-ebs-csi-driver --cluster eks-cluster-demo --service-account-role-arn arn:aws:iam::123456789012:role/eksctl-eks-cluster-demo-xxxxxxx
 ```
 
 Check if the created EBS CSI controller and node pods are present.
