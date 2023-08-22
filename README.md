@@ -100,7 +100,7 @@ This will allow the containers to use GP3 EBS backed storage for their volumes.
 
 Ensure that the service account for storage controller is created before running this command.
 ```
-$ kubectl apply -f cluster/ebs-storage-eks-v2.yaml
+$ kubectl apply -f cluster/ebs-storage.yaml
 ---
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
